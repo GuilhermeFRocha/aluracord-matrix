@@ -9,42 +9,76 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5v
 const SUPABASE_URL = 'https://xitqyajrsqjfkgtusveq.supabase.co'
 const suparbaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+function escutaMensagensEmTempoReal(adicionaMensagem) {
+    return suparbaseClient
+    .from('mensagens')
+    .on('INSERT', (respostaLive) => {
+      adicionaMensagem(respostaLive.new);
+      
+    })
+    .subscribe();
+  }
 
 export default function ChatPage() {
-    // Sua lógica vai aqui
+
+    suparbaseClient
+    .from('mensagens')
+    .select('*')
+    .then((dados) => {
+      console.log('Dados da consulta:', dados);
+    });
+
     const roteamento = useRouter();
     const usuarioLogado = roteamento.query.username;
     const [mensagem, setMensagem] = React.useState('');
-    const [listaDeMensagens, setListaDeMensagens] = React.useState([
-      {  
-        id: 1,
-        de:'omariosouto' ,
-        texto: ':sticker: https://i.pinimg.com/originals/96/34/c5/9634c520c9a3cd4e7f23190bb2c96500.gif',
-      }]);
+    const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
 
     React.useEffect(() => {
-        suparbaseClient.from('mensagens').select('*').order('id', { ascending: false}).then(({ data }) =>{
-            // setListaDeMensagens(data)
-        });
-    }, []);
+        suparbaseClient
+          .from('mensagens')
+          .select('*')
+          .order('id', {ascending: false })
+          .then(({ data }) => {
+            setListaDeMensagens(data);
+              });
+    
+              const subscription = escutaMensagensEmTempoReal((novaMensagem) => {
+                console.log('Nova mensagem:', novaMensagem);
+                console.log('listaDeMensagens:', listaDeMensagens);
+                // Quero reusar um valor de referencia (objeto/array) 
+                // Passar uma função pro setState
+          
+                // setListaDeMensagens([
+                //     novaMensagem,
+                //     ...listaDeMensagens
+                // ])
+                setListaDeMensagens((valorAtualDaLista) => {
+                  console.log('valorAtualDaLista:', valorAtualDaLista);
+                  return [
+                    novaMensagem,
+                    ...valorAtualDaLista,
+                  ]
+                });
+              });
+          
+              return () => {
+                subscription.unsubscribe();
+              }
+            }, []);
 
     function handleNovaMensagem (novaMensagem){
         const mensagem = {
-            // id: listaDeMensagens.length + 1,
             de: usuarioLogado,
             texto: novaMensagem,
         };
 
-        suparbaseClient.from('mensagens').insert([mensagem]).then(({ data }) => {
-            console.log(data);
-            setListaDeMensagens([
-                data[0],
-                ...listaDeMensagens,
-            ]);
+        suparbaseClient.from('mensagens').insert([mensagem])
+        .then(({ data }) => {
+            
 
         })
 
-        setMensagem('')
+        setMensagem('');
     }
     // ./Sua lógica vai aqui
     return (
@@ -126,7 +160,11 @@ export default function ChatPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                         />
-                        <ButtonSendSticker/>
+                        <ButtonSendSticker
+                         onStickerClick={(sticker) => {
+                                handleNovaMensagem(`:sticker: ${sticker}`);
+                        }}
+                        />
                     </Box>
                 </Box>
             </Box>
@@ -159,11 +197,12 @@ function MessageList(props) {
             tag="ul"
             styleSheet={{
              
-                display: 'flex',
-                flexDirection: 'column-reverse',
+                overflow: "auto",
+                display: "flex",
+                flexDirection: "column-reverse",
                 flex: 1,
                 color: appConfig.theme.colors.neutrals["000"],
-                marginBottom: '16px',
+                marginBottom: "16px",
             }}
         >
             {props.mensagens.map (()=>{
@@ -212,16 +251,16 @@ function MessageList(props) {
                     >
                         {(new Date().toLocaleDateString())}
                     </Text>
+                    
                 </Box>
-                {mensagem.texto.startsWith(':sticker:').toString()}
                 {mensagem.texto.startsWith(':sticker:')
-                ?(
-                  <Image src= {mensagem.texto.replace(':sticker', '')}/>
-                )
-                : (
-                    'false'
-                )
-                }
+                            ? (
+                                <Image src={mensagem.texto.replace(':sticker:', '')} />
+                            )
+                            : (
+                                mensagem.texto
+                            )
+                        }
             </Text>
     )
 })}
