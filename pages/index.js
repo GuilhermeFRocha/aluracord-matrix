@@ -36,7 +36,7 @@ function Titulo (props) {
 
 export default function PaginaInicial() {
   // const username = 'GuilhermeFRocha';
-  const [username, setUsername] = React.useState('peas');
+  const [username, setUsername] = React.useState('GuilhermeFRocha');
   const roteamento = useRouter();
 
 
@@ -45,8 +45,8 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundImage: 'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+  
+          backgroundImage: 'url(https://bordandonapratica.com.br/wp-content/uploads/2020/06/Matriz-De-Bordado-Nuvem-Vermelha-para-bordar-4-.png)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -76,17 +76,19 @@ export default function PaginaInicial() {
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
-          >
-            <Titulo tag="h2">Boas vindas de volta!</Titulo>
+            >
+            <Titulo tag="h2">Bem vindo Renegado!</Titulo>
             <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
-              {appConfig.name}
+             
             </Text>
 
-            <input type="text"
+
+            <input
+            type="text"
             value={username} 
             onChange={function (event) {
-            const valor =  event.target.value;
-            setUsername(valor)
+              const valor =  event.target.value;
+              setUsername(valor)
             }}
             />
             {/* <TextField
@@ -106,9 +108,9 @@ export default function PaginaInicial() {
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
+                mainColor: appConfig.theme.colors.primary[1000],
                 mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[600],
+                
               }}
             />
           </Box>
@@ -119,6 +121,7 @@ export default function PaginaInicial() {
           <Box
             styleSheet={{
               display: 'flex',
+            
               flexDirection: 'column',
               alignItems: 'center',
               maxWidth: '200px',
