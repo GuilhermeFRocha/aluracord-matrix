@@ -103,8 +103,12 @@ export default function PaginaInicial() {
               }}
             /> */}
             <Button
+             styleSheet={{
+              marginTop: '30px',
+           
+            }}
               type='submit'
-              label='Entrar'
+              label='Entrar para o grupo da Akatski !'
               fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],

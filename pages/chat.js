@@ -85,8 +85,9 @@ export default function ChatPage() {
         <Box
             styleSheet={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
+                backgroundImage: `url(https://c4.wallpaperflare.com/wallpaper/340/622/464/naruto-shippuuden-akatsuki-silhouette-zetsu-wallpaper-thumb.jpg)`,
+                    backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
+              
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
@@ -97,12 +98,14 @@ export default function ChatPage() {
                     flexDirection: 'column',
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-                    borderRadius: '5px',
-                    backgroundColor: appConfig.theme.colors.neutrals[700],
+                    borderRadius: '10px',
+                    border: '3px solid black ',
+
                     height: '100%',
                     maxWidth: '95%',
                     maxHeight: '95vh',
                     padding: '32px',
+                    backgroundColor: 'rgba(0, 0, 0, 0.50)',
                 }}
             >
                 <Header />
@@ -111,11 +114,13 @@ export default function ChatPage() {
                         position: 'relative',
                         display: 'flex',
                         flex: 1,
+                        border: '3px solid red',
                         height: '80%',
                         backgroundColor: appConfig.theme.colors.neutrals[600],
                         flexDirection: 'column',
-                        borderRadius: '5px',
                         padding: '16px',
+                        backgroundColor: 'rgba(0, 0, 0, 0.30)',
+                        borderRadius:'15px'
                     }}
                 >
 
@@ -150,14 +155,15 @@ export default function ChatPage() {
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
                             styleSheet={{
+                                backgroundColor: 'black',
                                 width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
                                 padding: '6px 8px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                backgroundColor: 'black',
                                 marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
+                                color: 'white',
                             }}
                         />
                         <ButtonSendSticker
@@ -175,7 +181,7 @@ export default function ChatPage() {
 function Header() {
     return (
         <>
-            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', color:'black', fontSize:'18px !important' }} >
                 <Text variant='heading5'>
                     Chat
                 </Text>
